@@ -63,7 +63,7 @@ header.main .wrap{display:flex;flex-wrap:wrap;align-items:center;justify-content
 .brand{display:flex;align-items:center;gap:12px;text-decoration:none;color:var(--ink)}
 .brand small{display:block;color:var(--muted);font-size:.8rem;letter-spacing:.06em;text-transform:uppercase}
 .brand strong{font-family:var(--display);font-size:1.3rem;font-weight:800}
-.menu{display:flex;flex-wrap:wrap;gap:4px}
+.menu{display:flex;flex-wrap:wrap;gap:4px;list-style:none;margin:0;padding:0}
 .menu a{color:var(--ink);text-decoration:none;padding:6px 12px;border-radius:999px;font-weight:700;font-size:.95rem}
 .brand .rays{transform-origin:24px 24px;transition:transform .6s ease}
 .brand:hover .rays{transform:rotate(45deg)}
@@ -138,13 +138,39 @@ footer a{color:var(--bg)}
   .hero .wrap,.two{grid-template-columns:1fr}
   .news,.contact{grid-template-columns:1fr}
   .steps{grid-template-columns:1fr 1fr}
-  header.main{position:static}
 }
 @media (max-width:480px){
   .steps{grid-template-columns:1fr}
   .fact{grid-template-columns:1fr;gap:2px}
   h2{font-size:1.6rem}
 }
+.menu-toggle{display:none;align-items:center;gap:10px;font:inherit;font-weight:700;color:var(--ink);background:var(--leaf);border:0;border-radius:999px;padding:10px 16px;cursor:pointer}
+.bars,.bars::before,.bars::after{display:block;width:18px;height:2px;background:currentColor;border-radius:2px;transition:transform .2s,background .2s}
+.bars{position:relative}
+.bars::before,.bars::after{content:"";position:absolute;left:0}
+.bars::before{top:-6px}
+.bars::after{top:6px}
+.menu-toggle[aria-expanded="true"] .bars{background:transparent}
+.menu-toggle[aria-expanded="true"] .bars::before{transform:translateY(6px) rotate(45deg)}
+.menu-toggle[aria-expanded="true"] .bars::after{transform:translateY(-6px) rotate(-45deg)}
+.menu-extra{display:none}
+@media (max-width:860px){
+  .util nav{display:none}
+  .menu-toggle{display:inline-flex}
+  .site-nav{display:none;flex-basis:100%;border-top:1px solid var(--line);padding-top:10px;max-height:calc(100vh - 140px);overflow-y:auto}
+  .site-nav.open{display:grid;gap:10px}
+  .site-nav .menu{flex-direction:column;gap:2px}
+  .site-nav .menu a{display:block;padding:12px 14px;border-radius:12px;font-size:1.05rem}
+  .menu-extra{display:grid;gap:2px;list-style:none;margin:0;padding:10px 0 4px;border-top:1px dashed var(--line)}
+  .menu-extra a{display:block;padding:8px 14px;color:var(--muted);text-decoration:none;font-size:.95rem}
+}
+@media (max-width:480px){
+  .brand svg{width:40px;height:40px}
+  .brand strong{font-size:1.1rem}
+  .brand small{font-size:.68rem}
+  .cta .btn{flex:1 1 auto;text-align:center}
+}
+@media (prefers-reduced-motion:reduce){.bars,.bars::before,.bars::after{transition:none}}
 @media (prefers-reduced-motion:reduce){*{scroll-behavior:auto!important}}
 html{scroll-behavior:smooth}
 </style>
@@ -179,12 +205,21 @@ html{scroll-behavior:smooth}
       <svg width="48" height="48" viewBox="0 0 48 48" aria-hidden="true"><g class="rays" stroke="var(--sun)" stroke-width="3.5" stroke-linecap="round"><path d="M41 24h5M36 36l3.5 3.5M24 41v5M12 36l-3.5 3.5M7 24H2M12 12L8.5 8.5M24 7V2M36 12l3.5-3.5"/></g><circle cx="24" cy="24" r="13.5" fill="var(--sun)"/><circle cx="16.8" cy="27.6" r="2.2" fill="#FF8FAB"/><circle cx="31.2" cy="27.6" r="2.2" fill="#FF8FAB"/><path d="M18.2 22.2q2-2.6 4 0M25.8 22.2q2-2.6 4 0M18.5 27q5.5 5.8 11 0" stroke="#2B2540" stroke-width="2.2" fill="none" stroke-linecap="round"/></svg>
       <span><small>Żłobek Miejski w Tychach</small><strong>„Słoneczna Polanka”</strong></span>
     </a>
-    <nav class="menu" aria-label="Menu główne">
-      <a href="#aktualnosci">Aktualności</a>
-      <a href="#rekrutacja">Rekrutacja</a>
-      <a href="#rodzice">Dla rodziców</a>
-      <a href="#jadlospis">Jadłospis</a>
-      <a href="#kontakt">Kontakt</a>
+    <button type="button" class="menu-toggle" aria-expanded="false" aria-controls="menu-glowne"><span class="bars" aria-hidden="true"></span>Menu</button>
+    <nav id="menu-glowne" class="site-nav" aria-label="Menu główne">
+      <ul class="menu">
+        <li><a href="#aktualnosci">Aktualności</a></li>
+        <li><a href="#rekrutacja">Rekrutacja</a></li>
+        <li><a href="#rodzice">Dla rodziców</a></li>
+        <li><a href="#jadlospis">Jadłospis</a></li>
+        <li><a href="#kontakt">Kontakt</a></li>
+      </ul>
+      <ul class="menu-extra">
+        <li><a href="#bip">Biuletyn Informacji Publicznej</a></li>
+        <li><a href="#deklaracja">Deklaracja dostępności</a></li>
+        <li><a href="#rodo">RODO</a></li>
+        <li><a href="#standardy">Standardy ochrony małoletnich</a></li>
+      </ul>
     </nav>
   </div>
 </header>
@@ -399,6 +434,14 @@ html{scroll-behavior:smooth}
     if(localStorage.getItem('hc')==='1')setHc(true);
     var t=localStorage.getItem('theme');if(t)setTheme(t);
   }catch(e){}
+  var mt=document.querySelector('.menu-toggle'),nav=document.getElementById('menu-glowne');
+  if(mt&&nav){
+    function setOpen(o){nav.classList.toggle('open',o);mt.setAttribute('aria-expanded',String(o))}
+    mt.addEventListener('click',function(){setOpen(!nav.classList.contains('open'))});
+    nav.addEventListener('click',function(e){if(e.target.closest('a'))setOpen(false)});
+    document.addEventListener('keydown',function(e){if(e.key==='Escape'&&nav.classList.contains('open')){setOpen(false);mt.focus()}});
+    matchMedia('(min-width:861px)').addEventListener('change',function(e){if(e.matches)setOpen(false)});
+  }
 })();
 </script>
 </body>
