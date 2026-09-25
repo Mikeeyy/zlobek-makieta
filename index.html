@@ -10,8 +10,8 @@
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,600;12..96,800&family=Atkinson+Hyperlegible:ital,wght@0,400;0,700;1,400&display=swap">
 <style>
 :root{
-  --bg:#F5F8F4; --surface:#FFFFFF; --ink:#1C2B2A; --muted:#566865; --line:#D9E2DC;
-  --accent:#0D6B5F; --accent-ink:#FFFFFF; --sun:#F4B63F; --sky:#E2EEF5; --leaf:#DDEEE3;
+  --bg:#FFFCF5; --surface:#FFFFFF; --ink:#2B2540; --muted:#645D78; --line:#EEE5D6;
+  --accent:#C23B5B; --accent-ink:#FFFFFF; --sun:#FFC23D; --sky:#E6F3FC; --leaf:#FFF2D9;
   --fs:16px;
   --display:"Bricolage Grotesque",system-ui,sans-serif;
   --body:"Atkinson Hyperlegible",system-ui,-apple-system,"Segoe UI",sans-serif;
@@ -19,14 +19,14 @@
 @media (prefers-color-scheme:dark){
   :root:not([data-theme="light"]){
     color-scheme:dark;
-    --bg:#111918; --surface:#182321; --ink:#E6EEEB; --muted:#9DB0AB; --line:#2A3A37;
-    --accent:#56C3B0; --accent-ink:#0B1413; --sun:#F4B63F; --sky:#1A2B33; --leaf:#1B2D26;
+    --bg:#1B1A2A; --surface:#25233A; --ink:#F4EFFA; --muted:#B9B1CC; --line:#3A3552;
+    --accent:#FF8FAB; --accent-ink:#1B1A2A; --sun:#FFC23D; --sky:#1E2A40; --leaf:#2D2638;
   }
 }
 :root[data-theme="dark"]{
   color-scheme:dark;
-  --bg:#111918; --surface:#182321; --ink:#E6EEEB; --muted:#9DB0AB; --line:#2A3A37;
-  --accent:#56C3B0; --accent-ink:#0B1413; --sun:#F4B63F; --sky:#1A2B33; --leaf:#1B2D26;
+  --bg:#1B1A2A; --surface:#25233A; --ink:#F4EFFA; --muted:#B9B1CC; --line:#3A3552;
+  --accent:#FF8FAB; --accent-ink:#1B1A2A; --sun:#FFC23D; --sky:#1E2A40; --leaf:#2D2638;
 }
 :root[data-contrast="high"]{
   color-scheme:dark;
@@ -45,7 +45,7 @@ p{margin:0}
 .skip{position:absolute;left:-9999px}
 .skip:focus{left:16px;top:8px;background:var(--surface);padding:8px 12px;z-index:10}
 
-.mock{background:var(--sun);color:#1C2B2A;font-size:.85rem;text-align:center;padding:6px 16px;font-weight:700}
+.mock{background:var(--sun);color:#2B2540;font-size:.85rem;text-align:center;padding:6px 16px;font-weight:700}
 
 .util{border-bottom:1px solid var(--line);background:var(--surface);font-size:.85rem}
 .util .wrap{display:flex;flex-wrap:wrap;gap:8px 20px;align-items:center;justify-content:space-between;padding-block:6px}
@@ -65,6 +65,9 @@ header.main .wrap{display:flex;flex-wrap:wrap;align-items:center;justify-content
 .brand strong{font-family:var(--display);font-size:1.3rem;font-weight:800}
 .menu{display:flex;flex-wrap:wrap;gap:4px}
 .menu a{color:var(--ink);text-decoration:none;padding:6px 12px;border-radius:999px;font-weight:700;font-size:.95rem}
+.brand .rays{transform-origin:24px 24px;transition:transform .6s ease}
+.brand:hover .rays{transform:rotate(45deg)}
+@media (prefers-reduced-motion:reduce){.brand .rays{transition:none}}
 .menu a:hover{background:var(--leaf)}
 
 .hero{padding-block:48px 40px}
@@ -165,6 +168,7 @@ html{scroll-behavior:smooth}
       <button type="button" id="fs-1" data-fs="18px" aria-pressed="false" aria-label="Większy tekst">A+</button>
       <button type="button" id="fs-2" data-fs="20px" aria-pressed="false" aria-label="Największy tekst">A++</button>
       <button type="button" id="hc" aria-pressed="false" aria-label="Wysoki kontrast">Kontrast</button>
+      <button type="button" id="theme" aria-pressed="false" aria-label="Tryb ciemny">Ciemny</button>
     </div>
   </div>
 </div>
@@ -172,7 +176,7 @@ html{scroll-behavior:smooth}
 <header class="main">
   <div class="wrap">
     <a class="brand" href="#">
-      <svg width="44" height="44" viewBox="0 0 44 44" aria-hidden="true"><circle cx="22" cy="22" r="22" fill="var(--sun)"/><path d="M8 30c5-7 9-7 14 0s9 7 14 0" stroke="var(--accent)" stroke-width="4" fill="none" stroke-linecap="round"/><circle cx="16" cy="18" r="2.4" fill="#1C2B2A"/><circle cx="28" cy="18" r="2.4" fill="#1C2B2A"/></svg>
+      <svg width="48" height="48" viewBox="0 0 48 48" aria-hidden="true"><g class="rays" stroke="var(--sun)" stroke-width="3.5" stroke-linecap="round"><path d="M41 24h5M36 36l3.5 3.5M24 41v5M12 36l-3.5 3.5M7 24H2M12 12L8.5 8.5M24 7V2M36 12l3.5-3.5"/></g><circle cx="24" cy="24" r="13.5" fill="var(--sun)"/><circle cx="16.8" cy="27.6" r="2.2" fill="#FF8FAB"/><circle cx="31.2" cy="27.6" r="2.2" fill="#FF8FAB"/><path d="M18.2 22.2q2-2.6 4 0M25.8 22.2q2-2.6 4 0M18.5 27q5.5 5.8 11 0" stroke="#2B2540" stroke-width="2.2" fill="none" stroke-linecap="round"/></svg>
       <span><small>Żłobek Miejski w Tychach</small><strong>„Słoneczna Polanka”</strong></span>
     </a>
     <nav class="menu" aria-label="Menu główne">
@@ -381,9 +385,19 @@ html{scroll-behavior:smooth}
     try{localStorage.setItem('hc',on?'1':'0')}catch(e){}
   }
   hc.addEventListener('click',function(){setHc(hc.getAttribute('aria-pressed')!=='true')});
+  var th=document.getElementById('theme');
+  function isDark(){var t=root.getAttribute('data-theme');return t?t==='dark':matchMedia('(prefers-color-scheme: dark)').matches}
+  function setTheme(t){
+    root.setAttribute('data-theme',t);
+    th.setAttribute('aria-pressed',String(t==='dark'));
+    try{localStorage.setItem('theme',t)}catch(e){}
+  }
+  th.addEventListener('click',function(){setTheme(isDark()?'light':'dark')});
+  th.setAttribute('aria-pressed',String(isDark()));
   try{
     var f=localStorage.getItem('fs');if(f)setFs(f);
     if(localStorage.getItem('hc')==='1')setHc(true);
+    var t=localStorage.getItem('theme');if(t)setTheme(t);
   }catch(e){}
 })();
 </script>
